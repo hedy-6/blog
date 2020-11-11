@@ -1,0 +1,12 @@
+{
+  "name": "blog",
+  "version": "0.0.1",
+  "description": "前端博客",
+  "main": "index.js",
+  "repository": "https://github.com/hedy-6/blog.git",
+  "author": "hedy_6@163.com",
+  "license": "MIT",
+  "devDependencies": {
+    "vuepress": "^1.7.1"
+  }
+}
