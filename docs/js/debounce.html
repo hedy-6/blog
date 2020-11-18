@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" id="ipt" />
+    <script>
+      document.querySelector("#ipt").addEventListener(
+        "input",
+        debounce(function(event) {
+          console.log(new Date().toLocaleTimeString() + event.target.value);
+        }, 2000)
+      );
+      // 防抖 每次触发后间隔几秒执行一次
+      function debounce(fn, delay) {
+        let timeout = null;
+        return function name() {
+          if (timeout) {
+            clearTimeout(timeout);
+          }
+          timeout = setTimeout(() => {
+            fn.call(this, arguments[0]);
+          }, delay);
+        };
+      }
+    </script>
+  </body>
+</html>
