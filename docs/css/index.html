@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      ul {
+        list-style: none;
+      }
+      .flex1,
+      .flex2,
+      .flex3,
+      .flex4 {
+        display: flex;
+      }
+      .flex1 {
+        flex-direction: column;
+      }
+      .flex2 {
+        flex-direction: column-reverse;
+      }
+      .flex3 {
+        /* flex-direction: row; */
+        flex-flow: row wrap;
+      }
+      .flex4 {
+        flex-direction: row-reverse;
+      }
+      .flex3 li,
+      .flex4 li {
+        width: 400px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="root">
+      <ul class="flex1">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+      </ul>
+      <ul class="flex2">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+      </ul>
+      <ul class="flex3">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+      </ul>
+      <ul class="flex4">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+      </ul>
+    </div>
+    <script></script>
+  </body>
+</html>

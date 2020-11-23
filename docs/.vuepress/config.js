@@ -19,7 +19,7 @@ module.exports = {
         ],
       },
       {
-        text: "高级",
+        text: "高级JS",
         items: [
           { text: "继承与原型链", link: "/high-javascript/extends-prototype/" },
           { text: "内存管理", link: "/high-javascript/memory-management/" },
@@ -28,6 +28,7 @@ module.exports = {
       {
         text: "工具",
         items: [
+          { text: "浏览器", link: "/tools/browser/" },
           { text: "Git", link: "/tools/git/" },
           { text: "Webpack", link: "/tools/webpack/" },
           { text: "eslint、stylelint、prettier", link: "/tools/lint/" },
@@ -42,6 +43,7 @@ module.exports = {
       "/js/": ["", "type", "closure"],
       "/react/": ["", "create-react-app", "react-hook"],
       "/vue/": ["", "vue-next"],
+      "/tools/browser/": [""],
       "/tools/git/": [""],
       "/tools/webpack/": [""],
       "/tools/lint/": [""],
@@ -51,7 +53,7 @@ module.exports = {
   configureWebpack: {
     resolve: {
       alias: {
-        "@img": "images",
+        "@img": "../images",
       },
     },
   },
