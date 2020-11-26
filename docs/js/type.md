@@ -1,11 +1,46 @@
-# 类型判断
+# 类型及类型判断
+
+## 数据类型
+
+原始类型：（值本身无法被改变）
+
+- Boolean
+- Null
+- Undefined
+- Number: 正负(2 的 53 次方 -1), +Infinity，-Infinity 和 NaN
+- BigInt: 可以安全地存储和操作大整数，甚至可以超过数字的安全整数限制。BigInt 是通过在整数末尾附加 n 或调用构造函数来创建的。
+- String
+- Symbol: 唯一的并且是不可修改的
+
+Object
+
+### Number
+
+- 检查值是否大于或小于 +/-Infinity，用 常量 Number.MAX_VALUE、Number.MIN_VALUE 判断
+- 检查值是否在双精度浮点数的取值范围内用 Number.isSafeInteger() 方法还有 Number.MAX_SAFE_INTEGER 和 Number.MIN_SAFE_INTEGER
+
+### BigInt
+
+- 通过使用常量 Number.MAX_SAFE_INTEGER，您可以获得可以用数字递增的最安全的值。通过引入 BigInt，您可以操作超过 Number.MAX_SAFE_INTEGER 的数字。
+- 可以对 BigInt 使用运算符+、\*、-、\*\*和%，就像对数字一样。BigInt 严格来说并不等于一个数字，但它是松散的。
+- 在将 BigInt 转换为 Boolean 时，它的行为类似于一个数字：if、||、&&、Boolean 和!。
+- BigInt 不能与数字互换操作
+
+```
+> const x = 2n ** 53n;
+9007199254740992n
+> const y = x + 1n;
+9007199254740993n
+```
 
 - typeof: 返回该变量的类型。
 - instanceof: 用于检测构造函数的 prototype 属性是否出现在某个实例对象的原型链上。
 - Object.prototype.toString(): 返回一个表示该对象的字符串。
 - constructor: 利用原型上的 prototype.constructor 指向实例的构造函数来进行判断。
 
-## typeof
+## 类型判断
+
+### typeof
 
 #### 参考链接
 
@@ -42,7 +77,7 @@ const func = new Function();
 console.log(typeof func); // 返回 'function'
 ```
 
-## instanceof
+### instanceof
 
 #### 参考链接
 
@@ -84,7 +119,7 @@ console.log(Fun.prototype); // {}
 
 ```
 
-### instanceof 和多个全局对象的交互
+#### instanceof 和多个全局对象的交互
 
 在浏览器中，我们的脚本可能需要在多个窗口之间进行交互。多个窗口意味着多个全局环境，不同的全局环境拥有不同的全局对象，从而拥有不同的内置类型构造函数。这可能会引发一些问题。
 
@@ -94,7 +129,7 @@ console.log(Fun.prototype); // {}
 # 可以通过 Array.isArray(myObj) 或 Object.prototype.toString.call(myObj) === "[object Array]" 来判断
 ```
 
-## Object.prototype.toString()
+### Object.prototype.toString()
 
 默认情况下，toString() 方法被每个 Object 对象继承。
 
@@ -110,12 +145,12 @@ console.log(toString.call(undefined)); // [object Undefined]
 console.log(toString.call(null)); // [object Null]
 ```
 
-## constructor
+### constructor
 
 - null 和 undefined 是无效的对象，因此是不会有 constructor 存在的，这两种类型的数据需要通过其他方式来判断。
 - 函数的 constructor 是不稳定的，这个主要体现在自定义对象上，当开发者重写 prototype 后，原有的 constructor 引用会丢失，constructor 会默认为 Object
 
-## 总结
+### 总结
 
 ```
 function getType(params) {

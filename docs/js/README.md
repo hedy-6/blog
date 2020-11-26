@@ -1,60 +1,5 @@
 # js
 
-## 数据类型
-
-原始类型：（值本身无法被改变）
-
-- Boolean
-- Null
-- Undefined
-- Number: 正负(2 的 53 次方 -1), +Infinity，-Infinity 和 NaN
-- BigInt: 可以安全地存储和操作大整数，甚至可以超过数字的安全整数限制。BigInt 是通过在整数末尾附加 n 或调用构造函数来创建的。
-- String
-- Symbol: 唯一的并且是不可修改的
-
-Object
-
-### Number
-
-- 检查值是否大于或小于 +/-Infinity，用 常量 Number.MAX_VALUE、Number.MIN_VALUE 判断
-- 检查值是否在双精度浮点数的取值范围内用 Number.isSafeInteger() 方法还有 Number.MAX_SAFE_INTEGER 和 Number.MIN_SAFE_INTEGER
-
-### BigInt
-
-- 通过使用常量 Number.MAX_SAFE_INTEGER，您可以获得可以用数字递增的最安全的值。通过引入 BigInt，您可以操作超过 Number.MAX_SAFE_INTEGER 的数字。
-- 可以对 BigInt 使用运算符+、\*、-、\*\*和%，就像对数字一样。BigInt 严格来说并不等于一个数字，但它是松散的。
-- 在将 BigInt 转换为 Boolean 时，它的行为类似于一个数字：if、||、&&、Boolean 和!。
-- BigInt 不能与数字互换操作
-
-```
-> const x = 2n ** 53n;
-9007199254740992n
-> const y = x + 1n;
-9007199254740993n
-```
-
-### 类型判断
-
-#### 使用 typeof
-
-```
-typeof true; // 'boolean'
-typeof null; // 'object'
-typeof undefined; // 'undefined'
-typeof 2; // 'number'
-typeof (2n ** 53n); // 'bigint'
-typeof Symbol("Sym"); // 'symbol'
-typeof "aaa"; // 'string'
-typeof (function(){}) // 'function'
-typeof []; // 'object'
-typeof {}; // 'object'
-typeof new Date(); // 'object'
-```
-
-#### instanceof
-
-用于检测构造函数的 prototype 属性是否出现在某个实例对象的原型链上
-
 ## var let const 的对比
 
 - var 有变量提升，初始值为 undefined；let 和 const 声明的变量是在定义被执行时才初始化，并且在初始化前访问该变量会陷入暂存死区。
@@ -81,6 +26,47 @@ function letTest() {
   console.log(x);  // 1
 }
 ```
+
+## this
+
+this 永远指向最后调用它的那个对象
+箭头函数的 this 始终指向函数定义时的 this，而非执行时。箭头函数中没有 this 绑定，必须通过查找作用域链来决定其值，如果箭头函数被非箭头函数包含，则 this 绑定的是最近一层非箭头函数的 this，否则，this 为 undefined”。
+
+### 如何改变 this 指向
+
+- 箭头函数
+- 在函数内部使用 \_this = this
+- 使用 apply、call、bind
+
+-
+
+## bind call apply
+
+### bind
+
+bind 是一个新函数，必须手动去调用
+
+```
+function.bind(thisArg[, arg1[, arg2[, ...]]])
+```
+
+bind() 方法创建一个新的函数，在 bind() 被调用时，这个新函数的 this 被指定为 bind() 的第一个参数，而其余参数将作为新函数的参数，供调用时使用。
+
+### call apply
+
+```
+func.apply(thisArg, [argsArray])
+function.call(thisArg, arg1, arg2, ...)
+```
+
+### 区别
+
+三个函数存在的区别, 用一句话来说的话就是: bind 是返回对应函数, 便于稍后调用; apply, call 则是立即调用. 除此外, 在 ES6 的箭头函数下, call 和 apply 的失效, 对于箭头函数来说:
+
+- 函数体内的 this 对象, 就是定义时所在的对象, 而不是使用时所在的对象;
+- 不可以当作构造函数, 也就是说不可以使用 new 命令, 否则会抛出一个错误;
+- 不可以使用 arguments 对象, 该对象在函数体内不存在. 如果要用, 可以用 Rest 参数代替;
+- 不可以使用 yield 命令, 因此箭头函数不能用作 Generator 函数;
 
 ## 继承 -- 原型式的继承
 
@@ -221,3 +207,51 @@ bind 实现方式
 闭包
 事件循环
 手写 promise
+
+## 防抖和节流
+
+### 防抖
+
+触发高频事件后 n 秒内函数只会执行一次，如果 n 秒内高频事件再次被触发，则重新计算时间
+
+```
+function debounce(fn) {
+  let timeout = null; // 创建一个标记用来存放定时器的返回值
+  return function() {
+    clearTimeout(timeout); // 每当用户输入的时候把前一个 setTimeout clear 掉
+    timeout = setTimeout(() => {
+      // 然后又创建一个新的 setTimeout, 这样就能保证输入字符后的 interval 间隔内如果还有字符输入的话，就不会执行 fn 函数
+      fn.apply(this, arguments);
+    }, 500);
+  };
+}
+function sayHi() {
+  console.log("防抖成功");
+}
+
+var inp = document.getElementById("inp");
+inp.addEventListener("input", debounce(sayHi)); // 防抖
+```
+
+### 节流
+
+高频事件触发，但在 n 秒内只会执行一次，所以节流会稀释函数的执行频率
+
+```
+function throttle(fn) {
+  let canRun = true; // 通过闭包保存一个标记
+  return function () {
+    if (!canRun) return; // 在函数开头判断标记是否为true，不为true则return
+    canRun = false; // 立即设置为false
+    setTimeout(() => { // 将外部传入的函数的执行放在setTimeout中
+      fn.apply(this, arguments);
+      // 最后在setTimeout执行完毕后再把标记设置为true(关键)表示可以执行下一次循环了。当定时器没有执行的时候标记永远是false，在开头被return掉
+      canRun = true;
+    }, 500);
+  };
+}
+function sayHi(e) {
+  console.log(e.target.innerWidth, e.target.innerHeight);
+}
+window.addEventListener('resize', throttle(sayHi));
+```
