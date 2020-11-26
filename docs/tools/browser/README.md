@@ -66,3 +66,22 @@ outline,visibility,color,background-color等
   - 样式集中改变：合并多次对 DOM 和样式的修改，通过设置 class 或设置 cssText 拼接起来
   - 分离读写（由于每次回流会造成额外的计算消耗，现代的大多数浏览器会通过队列化修改并批量执行来优化重排过程。浏览器会将修改操作放到队列里，直到过了一段时间，或者操作达到了一个阀值，才清空队列。但是，当获取布局信息操作的时候，如：offsetTop ,...,clientTop,...，scrollTop,...，getComputedStyle，currentStyle 等会强制队列刷新。）
   - 缓存布局信息： 如设置`div.style.left = div.offsetLeft + 10 + "px";` 改为`div.style.left = offsetLeft + 10 + "px";`
+
+## cookie 和 storage
+
+- 生命周期：
+  cookie：可设置失效时间，没有设置的话，默认是关闭浏览器后失效
+  localStorage：除非被手动清除，否则将会永久保存。
+  sessionStorage： 仅在当前网页会话下有效，关闭页面或浏览器后就会被清除。
+
+- 存放数据大小：
+  cookie：4KB 左右
+  localStorage 和 sessionStorage：可以保存 5MB 的信息。
+
+- http 请求：
+  cookie：每次都会携带在 HTTP 头中，如果使用 cookie 保存过多数据会带来性能问题
+  localStorage 和 sessionStorage：仅在客户端（即浏览器）中保存，不参与和服务器的通信
+
+- 易用性：
+  cookie：需要程序员自己封装，源生的 Cookie 接口不友好
+  localStorage 和 sessionStorage：源生接口可以接受，亦可再次封装来对 Object 和 Array 有更好的支持
