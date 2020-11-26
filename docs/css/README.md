@@ -343,6 +343,32 @@ flex-direction 和 flex-wrap 的简写，默认为 row nowrap
 align-self: auto | flex-start | flex-end | center | baseline | stretch;
 ```
 
+## gird 布局
+
+> 注意，设为网格布局以后，容器子元素（项目）的float、display: inline-block、display: table-cell、vertical-align和column-*等设置都将失效。
+
+```
+// grid-template-columns 每列列宽；grid-template-rows 每行行高
+display: grid;
+grid-template-columns: 100px 100px 100px;
+grid-template-rows: 100px 100px 100px;
+// 或
+grid-template-columns: 33.33% 33.33% 33.33%;
+grid-template-rows: 33.33% 33.33% 33.33%;
+// 或 repeat(重复次数，重复值)
+grid-template-columns: repeat(3, 33.33%);
+grid-template-rows: repeat(3, 33.33%);
+
+# 每列宽度100px，然后自动填充
+grid-template-columns: repeat(auto-fill, 100px);
+# 两个相同宽度的列
+grid-template-columns: 1fr 1fr;
+# minmax()函数产生一个长度范围，表示长度就在这个范围之中。它接受两个参数，分别为最小值和最大值。
+grid-template-columns: 1fr 1fr minmax(100px, 1fr);
+# auto关键字表示由浏览器自己决定长度
+grid-template-columns: 100px auto 100px;
+```
+
 ## 模块化 CSS
 
 ### BEM
