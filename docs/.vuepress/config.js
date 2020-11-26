@@ -48,7 +48,7 @@ module.exports = {
       "/high-javascript/memory-management/": [""],
       "/html/": [""],
       "/css/": [""],
-      "/js/": ["", "type", "closure", "ES2020", "clone"],
+      "/js/": ["", "type", "closure", "ES6", "ES2020", "clone"],
       "/react/": ["", "create-react-app", "react-hook"],
       "/vue/": ["", "vue-next"],
       "/tools/browser/": [""],
