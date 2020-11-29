@@ -12,6 +12,91 @@
 - Trace: 回显服务器收到的请求，主要用于测试或诊断
 - CONNECT: http1.1 中预留给能够将连接方式改为管道方式的代理服务器
 
+## 跨域
+
+### jsonp
+
+原理：利用 script（或 img，iframe） 标签中的 src 属性没有同源策源的限制，前端将回调函数作为参数传给服务器，服务器注入参数后返回；
+
+缺点：只能用于 get 请求；安全性低；
+
+```
+const script = document.createElement("script");
+script.type = "text/javascript";
+script.src = "http://www.baidu.com?callback=callback";
+function callback() {
+  console.log("callback");
+}
+document.head.appendChild(script);
+```
+
+### nginx 反向代理
+
+```
+server {
+  listen       3000;
+  server_name  localhost;
+
+  location /api/ {
+      proxy_pass  http://localhhost:3010;
+  }
+
+  location / {
+      root   html;
+      index  index.html index.htm;
+  }
+}
+```
+
+### node Server 代理
+
+proxy 工作原理实质上是利用 http-proxy-middleware 这个 http 代理中间件，实现请求转发给其他服务器。例如：本地主机 A 为<<http://localhost:3000，该主机浏览器发送一个请求，接口为/api，这个请求的数据（响应）在另外一台服务器B> <http://10.231.133.22:80上，这时，就可以通过A主机设置webpack>> proxy，直接将请求发送给 B 主机。
+
+原理：通过代理服务器，实现转发
+
+```
+const express = require('express');
+const { createProxyMiddleware } = require('http-proxy-middleware');
+
+const app = express();
+
+app.use('/api', createProxyMiddleware({ target: 'http://www.example.org', changeOrigin: true }));
+app.listen(3000);
+
+// http://localhost:3000/api/foo/bar -> http://www.example.org/api/foo/bar
+```
+
+### cros
+
+详细请看[阮一峰 跨域资源共享 CORS 详解](https://www.ruanyifeng.com/blog/2016/04/cors.html)
+
+原理：根据服务器返回响应头中是否包含`Access-Control-Allow-Origin`。
+
+缺点：需要浏览器和服务器同时支持
+
+- 简单请求
+
+请求方式是`Get，Head，Post`，请求头不超过以下字段
+Accept
+Accept-Language
+Content-Language
+Last-Event-ID
+Content-Type：只限于三个值 application/x-www-form-urlencoded、multipart/form-data、text/plain
+
+- 非简单请求
+
+非简单请求是那种对服务器有特殊要求的请求，比如请求方法是 PUT 或 DELETE，或者 Content-Type 字段的类型是 application/json。非简单请求的 CORS 请求，会在正式通信之前，增加一次 HTTP 查询请求，称为"预检"请求（preflight）。
+
+浏览器先询问服务器，当前网页所在的域名是否在服务器的许可名单之中，以及可以使用哪些 HTTP 动词和头信息字段。只有得到肯定答复，浏览器才会发出正式的 XMLHttpRequest 请求，否则就报错。
+
+> CORS 请求默认不发送 Cookie 和 HTTP 认证信息。如果要把 Cookie 发到服务器，一方面要服务器同意，指定 Access-Control-Allow-Credentials 字段。另一方面，开发者必须在 AJAX 请求中打开 withCredentials 属性。
+> 需要注意的是，如果要发送 Cookie，Access-Control-Allow-Origin 就不能设为星号，必须指定明确的、与请求网页一致的域名。同时，Cookie 依然遵循同源政策，只有用服务器域名设置的 Cookie 才会上传，其他域名的 Cookie 并不会上传，且（跨源）原网页代码中的 document.cookie 也无法读取服务器域名下的 Cookie。
+
+### 利用 iframe 实现跨域
+
+详细可查看[前端常见跨域解决方案（全）
+](https://segmentfault.com/a/1190000011145364)
+
 ## 缓存
 
 ### 缓存的优点
