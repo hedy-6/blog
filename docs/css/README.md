@@ -1,5 +1,123 @@
 # css
 
+## 优先级和继承
+
+### 优先级
+
+`!important > 内联 > #id > .calss > element`
+
+一个选择器的优先级可以说是由四个部分相加 (分量)，可以认为是个十百千 — 四位数的四个位数：
+
+- 千位： 如果声明在 style 的属性（内联样式）则该位得一分。这样的声明没有选择器，所以它得分总是 1000。
+- 百位： 选择器中包含 ID 选择器则该位得一分。
+- 十位： 选择器中包含类选择器、属性选择器或者伪类则该位得一分。
+- 个位：选择器中包含元素、伪元素选择器则该位得一分。
+
+### 继承
+
+#### 继承的属性
+
+- 字体类：`font font-family font-weight font-size font-style`
+- 文本类：`text-indent text-align text-shadow line-height word-spacing letter-spacing text-transform direction color`
+- 元素可见性：`visibility`
+- 表格布局属性：`caption-side、border-collapse、border-spacing、empty-cells、table-layout`
+- 列表属性：`list-style-type、list-style-image、list-style-position、list-style`
+- 其他属性： `cursor`
+
+#### 控制继承
+
+- inherit 设置该属性会使子元素属性和父元素相同。实际上，就是 "开启继承".
+- initial 设置属性值和浏览器默认样式相同。如果浏览器默认样式中未设置且该属性是自然继承的，那么会设置为 inherit 。
+- unset 将属性重置为自然值，也就是如果属性是自然继承那么就是 inherit，否则和 initial 一样
+
+#### 重设所有属性值
+
+`all: inherit | initial | unset | revert`
+
+#### a 标签
+
+a 标签继承父元素样式，但是被浏览器的 a 元素的默认样式（blue，下划线）覆盖。在浏览器中，a 标签的默认样式：
+
+- 未被访问的链接带有下划线而且是蓝色的
+- 已被访问的链接带有下划线而且是紫色的
+- 活动链接带有下划线而且是红色的（即 :active 状态）
+
+## 选择器
+
+### 参考链接
+
+- [MDN CSS 选择器](https://developer.mozilla.org/zh-CN/docs/Learn/CSS/Building_blocks/Selectors)
+- [阮一峰 CSS 选择器](http://www.ruanyifeng.com/blog/2009/03/css_selectors.html)
+- [W3C CSS 选择器](https://www.w3school.com.cn/cssref/css_selectors.asp)
+
+1. 基本选择器
+
+   - `.class`
+   - `#id`
+   - `*`
+   - `element`
+
+2. 多元素组合选择器
+
+   - `elementA,elementB`
+   - `elementP elementC`后代选择器
+   - `elementP>elementC`子代选择器
+   - `element+element`兄弟选择器
+   - `element1~element2`通用兄弟选择器即前面有 element1 元素的每个 element2 元素
+
+3. 属性选择器
+
+   - `[attribute]`;
+   - `[attribute=value]`;
+   - `[attribute~=value]` 选择 attribute 属性包含 `value` 的所有元素。;
+   - `[attribute|=value]` 选择 attribute 属性值以 `value` 开头的所有元素;
+   - `[attribute^=value]` 开头;
+   - `[attribute\$=value]` 结尾;
+   - `[attribute\*=value]` 包含;
+
+4. 伪类和伪元素
+
+伪类
+
+    - :active :hover :focus :focus-visible :focus-within :link :visited :target
+    - :disabled :enabled :empty :blank :checked :default[默认值] :required :indeterminate :in-range :valid :invalid :optional
+    - :root
+    - :first-child / :last-child 匹配兄弟元素中的第一个/最末元素。
+    - :first-of-type / :last-of-type 匹配兄弟元素中第一个/最末某种类型的元素。
+    - :nth-child :nth-of-type
+    - :nth-last-child :nth-last-of-type
+    - :only-child :only-of-type
+    - :not
+
+伪元素
+
+    - ::after ::before
+    - ::first-letter ::first-line
+    - ::selection
+
+> 伪类和伪元素的区别?
+> 伪类：用于选择处于特定状态的元素，伪类开头为冒号:，如 :first-child :hover
+> 伪元素：像在标记文本中加入全新的 HTML 元素一样，而不是向现有的元素上应用类 。伪元素开头为双冒号::，如::first-line ，特殊的如::before ::after 和 content 属性一起使用，一般用于插入图标
+
+## 盒模型
+
+```
+width: 300px;
+border: 5px solid green;
+padding: 10px;
+margin: 20px;
+```
+
+标准盒模型，设置宽度为 300px，即表示内容宽度为 300px，不包含 padding 和 border 。在谷歌浏览器默认为 content-box;在 IE 浏览器默认为 border-box;
+
+- css 设置 box-sizing: content-box;
+
+![css 设置 box-sizing: border-box;](./images/css-content-box.png)
+
+- css 设置 box-sizing: border-box;
+
+![css 设置 box-sizing: content-box;](./images/css-border-box.png)
+
 ## 布局
 
 - 正常布局流
@@ -166,89 +284,6 @@ justify-content: center;
 }
 ```
 
-## 盒模型
-
-```
-width: 300px;
-border: 5px solid green;
-padding: 10px;
-margin: 20px;
-```
-
-谷歌浏览器默认为 content-box;IE 浏览器默认为 border-box;
-
-- css 设置 box-sizing: content-box;
-
-![css 设置 box-sizing: border-box;](@img/css/css-content-box.png)
-
-- css 设置 box-sizing: border-box;
-
-![css 设置 box-sizing: content-box;](@img/css/css-border-box.png)
-
-## 选择器
-
-#### 参考链接
-
-- [阮一峰 CSS 选择器](http://www.ruanyifeng.com/blog/2009/03/css_selectors.html)
-- [W3C CSS 选择器](https://www.w3school.com.cn/cssref/css_selectors.asp)
-
-1. 基本选择器
-
-- .class;
-- #id;
-- \*;
-- element;
-
-2. 多元素组合选择器
-
-- elementA,elementB;
-- elementP elementC;
-- elementP>elementC;
-- element+element;
-- element1~element2(选择前面有 `element1` 元素的每个 `element2` 元素。);
-
-3. 属性选择器
-
-- [attribute];
-- [attribute=value];
-- [attribute~=value] 选择 attribute 属性包含 `value` 的所有元素。;
-- [attribute|=value] 选择 attribute 属性值以 `value` 开头的所有元素;
-- [attribute^=value] 开头;
-- [attribute\$=value] 结尾;
-- [attribute\*=value] 包含;
-
-4. 伪类选择器
-
-- :first-child;
-- :only-child
-- :last-child
-- :nth-child(n)
-- :nth-last-child(n)
-- :first-of-type
-- :last-of-type
-- :last-of-type
-- :nth-of-type(n)
-- :nth-last-of-type(n)
-- :link;
-- :visited;
-- :active;
-- :hover;
-- :focus;
-- :lang(language)
-- :root;
-- :before;
-- :after;
-- :first-line;
-- :first-letter;
-
-- :enabled;
-- :disabled;
-- :checked;
-- ::selection;
-- :em.ty;
-- :target
-- :not(selector)
-
 ## flex 布局
 
 > 设为 Flex 布局以后，子元素的 float、clear 和 vertical-align 属性将失效。
@@ -345,7 +380,7 @@ align-self: auto | flex-start | flex-end | center | baseline | stretch;
 
 ## gird 布局
 
-> 注意，设为网格布局以后，容器子元素（项目）的float、display: inline-block、display: table-cell、vertical-align和column-*等设置都将失效。
+> 注意，设为网格布局以后，容器子元素（项目）的 float、display: inline-block、display: table-cell、vertical-align 和 column-\*等设置都将失效。
 
 ```
 // grid-template-columns 每列列宽；grid-template-rows 每行行高

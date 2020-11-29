@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        font-size: 16px;
+      }
+      div.list {
+        color: teal;
+        height: 500px;
+      }
+      .link1 {
+        color: inherit;
+      }
+      .link2 {
+        color: initial;
+      }
+      .link3 {
+        color: unset;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="list">
+      this is list
+      <ul>
+        <li><a href="http://www.baidu.com/1">default</a></li>
+        <li><a href="http://www.baidu.com">访问过</a></li>
+        <li><a href="#content">点击时</a></li>
+        <li><a class="link1" href="http://www.baidu.com">inherit</a></li>
+        <li><a class="link2" href="http://www.baidu.com">initial</a></li>
+        <li><a class="link3" href="http://www.baidu.com">unset</a></li>
+      </ul>
+    </div>
+    <div id="content">
+      <header>
+        头部
+        <nav>
+          <ul>
+            <li>导航1</li>
+            <li>导航2</li>
+          </ul>
+        </nav>
+      </header>
+      <main>
+        <aside>
+          aside
+        </aside>
+        <section>
+          section
+
+          <div>
+            <dl>
+              <dt>岁月是一把杀猪刀</dt>
+              <dd>为什么说岁月是一把<s>杀猪刀</s></dd>
+              <dd>苍天饶过谁</dd>
+            </dl>
+            <article>
+              <cite>新闻三十分</cite>
+              <h2>今日新闻</h2>
+              <p>别人家的孩子</p>
+              <p><q>你看看人家的孩子多么乖，你看看你</q>妈妈总是这样说我</p>
+              <blockquote>来源：新闻报社</blockquote>
+            </article>
+            <address>
+              <a href="http://www.baidu.com">来源内容：百度</a>
+            </address>
+          </div>
+        </section>
+      </main>
+      <footer>底部</footer>
+    </div>
+  </body>
+</html>

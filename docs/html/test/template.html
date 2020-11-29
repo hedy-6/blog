@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .name {
+        color: blueviolet;
+      }
+      .order {
+        color: chocolate;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>
+      模版元素，加载时不会呈现，可以在运行时使用 js 实例化。测试浏览器是否支持
+      HTML 模板元素 `'content' in document.createElement('template')`
+    </h2>
+    <table>
+      <thead>
+        <th>名称</th>
+        <th>排序</th>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <template id="myTemplate">
+      <tr>
+        <td class="name"></td>
+        <td class="order"></td>
+      </tr>
+    </template>
+    <script type="text/javascript">
+      if ("content" in document.createElement("template")) {
+        console.log("支持template 标签");
+        const myTemplate = document.querySelector("#myTemplate");
+        const [td1, td2] = myTemplate.content.querySelectorAll("td");
+        const list = [];
+        for (let i = 0; i < 10000; i++) {
+          list.push({ name: `王${i}`, order: i });
+        }
+
+        const target = document.querySelector("tbody");
+
+        const time1 = new Date().getTime();
+        list.forEach((item) => {
+          td1.textContent = item.name;
+          td2.textContent = item.order;
+          const clone = document.importNode(myTemplate.content, true);
+          target.appendChild(clone);
+        });
+        const time2 = new Date().getTime();
+        console.info(time2 - time1); // 60-80
+
+        // const frag = document.createDocumentFragment();
+        // const time1 = new Date().getTime();
+        // list.forEach((item) => {
+        //   td1.textContent = item.name;
+        //   td2.textContent = item.order;
+        //   frag.appendChild(myTemplate.content.cloneNode(true));
+        // });
+        // target.appendChild(frag);
+        // const time2 = new Date().getTime();
+        // console.info(time2 - time1); // 70-100
+      }
+    </script>
+  </body>
+</html>
