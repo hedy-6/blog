@@ -23,11 +23,7 @@ module.exports = {
       },
       {
         text: "高级JS",
-        items: [
-          { text: "继承与原型链", link: "/high-javascript/extends-prototype/" },
-          { text: "内存管理", link: "/high-javascript/memory-management/" },
-          { text: "模块化", link: "/high-javascript/modules/" },
-        ],
+        link: "/high-javascript/",
       },
       {
         text: "工具",
@@ -44,11 +40,18 @@ module.exports = {
     ],
     sidebar: {
       // "/tools/": ["", "webpack", "git"],
-      "/high-javascript/modules/": [""],
-      "/high-javascript/memory-management/": [""],
+      "/high-javascript/": [
+        "",
+        "Prototype",
+        "Scope",
+        "this",
+        "closure",
+        "Modules",
+        "GC",
+      ],
       "/html/": [""],
       "/css/": [""],
-      "/js/": ["", "type", "closure", "ES6", "ES2020", "clone"],
+      "/js/": ["", "type", "ES6", "ES2020", "clone", "eventloop"],
       "/react/": ["", "create-react-app", "react-hook"],
       "/vue/": ["", "vue-next"],
       "/tools/browser/": [""],
