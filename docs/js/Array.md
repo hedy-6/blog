@@ -1,5 +1,29 @@
 ## Array
 
+- includes
+- find
+- findIndex
+- keys
+- values
+- entries
+- from 将类数组(dom 集合，函数内部的 arguments)或 iterable(Set,字符串) 对象转为数组。以及支持有 length 属性的对象转数组。（扩展运算符（...）也可以将某些数据结构转为数组，原理是 iterable 接口。）
+
+```
+let arrayLike = {
+  "0": "a",
+  "1": "b",
+  "2": "c",
+  length: 3,
+};
+# Array.prototype.slice
+console.log([].slice.call(arrayLike)); // ES5的写法 [ 'a', 'b', 'c' ]
+console.log(Array.from(arrayLike)); // ES6的写法 [ 'a', 'b', 'c' ]
+
+console.log(Array.from("hello")); // [ 'h', 'e', 'l', 'l', 'o' ]
+console.log(Array.from(new Set(["a", "b"]))); // [ 'a', 'b' ]
+console.log(Array.from({ length: 3 })); // [ undefined, undefined, undefined ]
+```
+
 ### every
 
 测试一个数组内的所有元素是否都能通过某个指定函数的测试。它返回一个布尔值。
