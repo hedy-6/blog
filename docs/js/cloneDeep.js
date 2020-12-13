@@ -4,12 +4,13 @@ function clone(target, map = new Map()) {
   }
   let newTarget = Array.isArray(target) ? [] : {};
   if (map.get(target)) {
+    console.info("target", target);
     return target;
   }
-  map.set(target, newTarget);
   for (let key in target) {
     newTarget[key] = clone(target[key], map);
   }
+  map.set(target, newTarget);
   return newTarget;
 }
 const obj = {

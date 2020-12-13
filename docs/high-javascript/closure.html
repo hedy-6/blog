@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <p id="help">Helpful notes will appear here</p>
+      <p>E-mail: <input type="text" id="email" name="email" /></p>
+      <p>Name: <input type="text" id="name" name="name" /></p>
+      <p>Age: <input type="text" id="age" name="age" /></p>
+    </div>
+
+    <script>
+      async function map(params) {
+        for (let i = 0; i < 5; i++) {
+          await new Promise((resolve, reject) => {
+            setTimeout(() => {
+              resolve();
+            }, 1000);
+          });
+          console.log(i);
+        }
+      }
+      map();
+
+      function showHelp(help) {
+        document.getElementById("help").innerHTML = help;
+      }
+
+      function setupHelp() {
+        var helpText = [
+          { id: "email", help: "Your e-mail address" },
+          { id: "name", help: "Your full name" },
+          { id: "age", help: "Your age (you must be over 16)" },
+        ];
+        /*
+        for (var i = 0; i < helpText.length; i++) {
+          var item = helpText[i];
+          document.getElementById(item.id).onfocus = function() {
+            showHelp(item.help);
+          };
+        }
+        */
+
+        /*
+        // 解决方案1 --- 使用块级作用域
+        for (var i = 0; i < helpText.length; i++) {
+          let item = helpText[i];
+          document.getElementById(item.id).onfocus = function() {
+            showHelp(item.help);
+          };
+        }
+        */
+
+        // 解决方案2 ---  使用更多的闭包
+        // for (var i = 0; i < helpText.length; i++) {
+        //   var item = helpText[i];
+        //   document.getElementById(item.id).onfocus = makeHelpCallback(
+        //     item.help
+        //   );
+        // }
+        // function makeHelpCallback(help) {
+        //   console.info("help", help);
+        //   return function() {
+        //     showHelp(help);
+        //   };
+        // }
+        // 解决方案3 ---  使用立即执行函数
+        for (var i = 0; i < helpText.length; i++) {
+          (function() {
+            var item = helpText[i];
+            document.getElementById(item.id).onfocus = function() {
+              showHelp(item.help);
+            };
+          })();
+        }
+        // 解决方案4 ---  使用forEach
+        // helpText.forEach((item) => {
+        //   document.getElementById(item.id).onfocus = function() {
+        //     showHelp(item.help);
+        //   };
+        // });
+      }
+
+      setupHelp();
+    </script>
+  </body>
+</html>

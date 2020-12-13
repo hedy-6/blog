@@ -3,6 +3,7 @@ const data = {
   num: 123,
   bool: true,
   arr: [43, 2],
+  arr2: [{ name: "hello" }, { name: "world" }],
   undef: undefined,
   nil: null,
   fun: function() {

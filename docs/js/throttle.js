@@ -11,6 +11,7 @@ function throttle(fn, delay) {
   };
 }
 /* 节流应用场景：
+在delay中只执行一次
 1. scroll 事件；
 2. 浏览器播放事件；
 3. input 实时搜索；

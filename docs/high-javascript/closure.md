@@ -65,6 +65,52 @@ console.log(Counter.value()); // 1
 - 闭包会在父函数外部，改变父函数内部变量的值。所以，如果你把父函数当作对象（object）使用，把闭包当作它的公用方法（Public Method），把内部变量当作它的私有属性（private value），这时一定要小心，不要随便改变父函数内部变量的值。
 - 在循环中创建闭包，可能存在共用词法作用域的问题。可以使用 let、const 绑定块作用域。
 
+## 循环中的闭包
+
+```
+function func() {
+  for (var i = 0; i < 3; i++) {
+    console.info("i", i);
+    setTimeout(() => {
+      console.info("s_i", i);
+    }, 500);
+  }
+  // 使用let
+  // for (let i = 0; i < 3; i++) {
+  //   console.info("i", i);
+  //   setTimeout(() => {
+  //     console.info("s_i", i);
+  //   }, 500);
+  // }
+  // 使用更多的闭包函数
+  // function lazy(i) {
+  //   setTimeout(() => {
+  //     console.info("s_i", i);
+  //   }, 500);
+  // }
+  // for (var i = 0; i < 3; i++) {
+  //   console.info("i", i);
+  //   lazy(i);
+  // }
+  // 使用立即执行函数
+  // for (var i = 0; i < 3; i++) {
+  //   console.info("i", i);
+  //   (function(t) {
+  //     setTimeout(() => {
+  //       console.info("s_i", t);
+  //     }, 500);
+  //   })(i);
+  // }
+  // 使用 forEach
+  // [0, 1, 2].forEach((i) => {
+  //   setTimeout(() => {
+  //     console.info("s_i", i);
+  //   }, 500);
+  // });
+}
+func();
+```
+
 ## 题目解析
 
 ```
